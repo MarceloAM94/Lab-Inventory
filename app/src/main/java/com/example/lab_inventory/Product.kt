@@ -1,7 +1,7 @@
 package com.example.lab_inventory
 
 data class Product(
-    val ID_Document: String = "",
+    var ID_Document: String = "",
     val ID_laboratorios: String = "",
     val nombre_item: String = "",
     val categoria: String = "",

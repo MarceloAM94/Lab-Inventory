@@ -52,7 +52,15 @@ class CrudLabActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductAdapter(products)
+        adapter = ProductAdapter(
+            products,
+            onDeleteClicked = { product -> // Callback para eliminar
+                showDeleteConfirmationDialog(product)
+            },
+            onEditClicked = { product -> // Callback para editar
+                showEditProductDialog(product)
+            }
+        )
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@CrudLabActivity)
             adapter = this@CrudLabActivity.adapter
@@ -60,18 +68,21 @@ class CrudLabActivity : AppCompatActivity() {
         }
     }
 
+
     private fun loadInventoryData(labId: String) {
         db.collection("inventario")
             .whereEqualTo("ID_laboratorios", labId)
             .get()
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
-                    products.clear() // Limpia la lista para evitar duplicados
+                    products.clear()
                     for (document in documents) {
-                        val item = document.toObject(Product::class.java)
+                        val item = document.toObject(Product::class.java).apply {
+                            ID_Document = document.id // Asignar el ID del documento al modelo
+                        }
                         products.add(item)
                     }
-                    adapter.notifyDataSetChanged() // Notifica al adaptador que los datos han cambiado
+                    adapter.notifyDataSetChanged()
                 } else {
                     Log.d("CrudLabActivity", "No se encontraron productos para el laboratorio: $labId")
                 }
@@ -90,6 +101,7 @@ class CrudLabActivity : AppCompatActivity() {
         }
     }
 
+    //Anadir producto
     private fun showAddProductDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_product, null)
         val dialog = AlertDialog.Builder(this)
@@ -129,5 +141,86 @@ class CrudLabActivity : AppCompatActivity() {
             .create()
         dialog.show()
     }
+
+    //Confirmacion para eliminar producto
+    private fun showDeleteConfirmationDialog(product: Product) {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar Producto")
+            .setMessage("¿Estás seguro de que deseas eliminar el producto '${product.nombre_item}'?")
+            .setPositiveButton("Eliminar") { _, _ ->
+                deleteProductFromFirestore(product)
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun deleteProductFromFirestore(product: Product) {
+        db.collection("inventario")
+            .document(product.ID_Document) // El `id` debe ser el identificador único del documento
+            .delete()
+            .addOnSuccessListener {
+                Log.d("CrudLabActivity", "Producto eliminado correctamente")
+                Toast.makeText(this, "Producto eliminado", Toast.LENGTH_SHORT).show()
+
+                // Actualizar la lista de productos
+                products.remove(product)
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                Log.e("CrudLabActivity", "Error al eliminar el producto", e)
+                Toast.makeText(this, "Error al eliminar el producto", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    //Dialogo para editar producto
+    private fun showEditProductDialog(product: Product) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_product, null)
+
+        val etNombre = dialogView.findViewById<EditText>(R.id.etNombre)
+        val etCategoria = dialogView.findViewById<EditText>(R.id.etCategoria)
+        val etCantidad = dialogView.findViewById<EditText>(R.id.etCantidad)
+        val etEstado = dialogView.findViewById<EditText>(R.id.etEstado)
+
+        // Precargar los datos del producto
+        etNombre.setText(product.nombre_item)
+        etCategoria.setText(product.categoria)
+        etCantidad.setText(product.cantidad.toString())
+        etEstado.setText(product.estado)
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Editar Producto")
+            .setView(dialogView)
+            .setPositiveButton("Guardar") { _, _ ->
+                val nombreItem = etNombre.text.toString()
+                val categoria = etCategoria.text.toString()
+                val cantidad = etCantidad.text.toString().toIntOrNull() ?: 0
+                val estado = etEstado.text.toString()
+
+                // Crear el mapa directamente como MutableMap<String, Any>
+                val updatedProduct: MutableMap<String, Any> = mutableMapOf(
+                    "nombre_item" to nombreItem,
+                    "categoria" to categoria,
+                    "cantidad" to cantidad,
+                    "estado" to estado
+                )
+
+                // Actualizar el producto en Firestore
+                db.collection("inventario").document(product.ID_Document)
+                    .update(updatedProduct)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Producto actualizado", Toast.LENGTH_SHORT).show()
+                        loadInventoryData(labId) // Recargar la lista
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("CrudLabActivity", "Error al actualizar producto", e)
+                        Toast.makeText(this, "Error al actualizar: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .setNegativeButton("Cancelar", null)
+            .create()
+        dialog.show()
+    }
+
+
 }
 

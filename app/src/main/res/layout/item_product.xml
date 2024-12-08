@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre del Item"
-        android:textStyle="bold" />
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/categoriaTextView"
@@ -23,4 +23,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cantidad" />
+
+    <TextView
+        android:id="@+id/txtEstadoProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnEliminarProducto"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Eliminar"
+            android:textColor="@color/white" />
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnEditarProducto"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Editar"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
 </LinearLayout>
