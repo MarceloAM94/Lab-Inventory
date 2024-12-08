@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "571220276181",
+    "project_id": "lab-inventori",
+    "storage_bucket": "lab-inventori.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571220276181:android:52afe126cbc9bd76cd435c",
+        "android_client_info": {
+          "package_name": "com.example.lab_inventory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAahYV647unrRWQeEpxZe-cwIJHWq0o2Wk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
