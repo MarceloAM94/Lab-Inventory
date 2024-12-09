@@ -3,59 +3,68 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp"
+    android:background="@color/background">
 
+    <!-- Nombre del Item -->
     <TextView
         android:id="@+id/nombreItemTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre del Item"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:paddingBottom="4dp" />
 
+    <!-- Categoría -->
     <TextView
         android:id="@+id/categoriaTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categoría" />
+        android:text="Categoría"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingBottom="4dp" />
 
+    <!-- Cantidad -->
     <TextView
         android:id="@+id/cantidadTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cantidad" />
+        android:text="Cantidad"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingBottom="4dp" />
 
+    <!-- Estado -->
     <TextView
         android:id="@+id/txtEstadoProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estado" />
+        android:text="Estado"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:paddingBottom="16dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp" />
-
+    <!-- Botones -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <Button
             android:id="@+id/btnEliminarProducto"
-            android:layout_width="185dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:backgroundTint="@color/colorAccent"
             android:text="Eliminar"
-            android:textColor="@color/white" />
-
-        <Space
-            android:layout_width="8dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:textColor="@color/white"
+            android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/btnEditarProducto"
-            android:layout_width="185dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:backgroundTint="@color/colorAccent"
             android:text="Editar"
             android:textColor="@color/white" />

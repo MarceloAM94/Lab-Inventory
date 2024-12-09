@@ -3,15 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/fondoproducto"
+    android:padding="16dp">
 
+    <!-- Contenedor principal en orientación vertical -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:orientation="vertical"
-        android:padding="8dp">>
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/btnMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Título de la sección -->
         <TextView
             android:id="@+id/txtLabTitle"
             android:layout_width="match_parent"
@@ -19,50 +29,48 @@
             android:gravity="center"
             android:paddingBottom="8dp"
             android:text="Laboratorio"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <!-- RecyclerView para mostrar los datos -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="558dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:padding="4dp" />
 
+        <!-- Botón Agregar -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
-
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/btnAgregar"
-                android:layout_width="360dp"
-                android:layout_height="60dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="Agregar" />
-
-            <Space
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:padding="12dp"
+                android:text="Agregar"
+                android:textColor="@color/white" />
         </LinearLayout>
-
     </LinearLayout>
 
+    <!-- Botón para volver al menú -->
     <Button
         android:id="@+id/btnMenu"
-        android:layout_width="360dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/colorAccent"
-        android:text="Volver al Menu"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Volver al Menú"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="16dp" />
 
-
-    <!-- RecyclerView para mostrar la lista de productos -->
 </androidx.constraintlayout.widget.ConstraintLayout>
